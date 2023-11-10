@@ -1,0 +1,16 @@
+database:
+  connections:
+    - wgi:
+        dialect: 'mysql'
+        host: 'localhost'
+        port: 3306
+        schema: 'WorldGovernanceIndicators'
+        username: 'admin'
+        password: '123'
+    - doing-bussiness:
+        dialect: 'mysql'
+        host: 'localhost'
+        port: 3306
+        schema: 'DoingBusiness'
+        username: 'admin'
+        password: '123'
