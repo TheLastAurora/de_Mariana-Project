@@ -25,7 +25,7 @@ class DatabaseConnection:
         self.credentials = self._get_credentials()
         self.engine = self._create_engine()
 
-    def _get_credentials(self) -> sql.Engine:
+    def _get_credentials(self) -> dict:
         cwd = os.path.dirname(os.path.realpath(__file__))
         config = os.path.join(cwd, "..", "config.yaml")
         with open(config) as f:
@@ -57,9 +57,9 @@ class DatabaseConnection:
         )
         return logger
 
-    def _create_engine(self):
+    def _create_engine(self) -> sql.Engine:
         try:
-            sql.create_engine(
+            return sql.create_engine(
                 "{dialect}+{driver}://{username}:{password}@{host}:{port}/{schema}".format(
                     **self._get_credentials()
                 )

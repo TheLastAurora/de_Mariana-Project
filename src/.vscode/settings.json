@@ -8,5 +8,6 @@
         "**/Thumbs.db": true,
         "**/.ruby-lsp": true,
         "**/__pycache__": true
-    }
+    },
+    "python.languageServer": "Pylance"
 }
