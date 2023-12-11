@@ -1,0 +1,110 @@
+id,ISO Code 2,ISO Code 3,Countries
+0,AL,ALB,Albania
+1,DZ,DZA,Algeria
+2,AO,AGO,Angola
+3,AR,ARG,Argentina
+4,AM,ARM,Armenia
+5,AU,AUS,Australia
+6,AT,AUT,Austria
+7,AZ,AZE,Azerbaijan
+8,BH,BHR,Bahrain
+9,BD,BGD,Bangladesh
+10,BE,BEL,Belgium
+11,BW,BWA,Botswana
+12,BR,BRA,Brazil
+13,BG,BGR,Bulgaria
+14,BF,BFA,Burkina Faso
+15,CM,CMR,Cameroon
+16,CA,CAN,Canada
+17,CL,CHL,Chile
+18,CN,CHN,China
+19,CO,COL,Colombia
+20,CD,COD,"Congo, Dem. Rep."
+21,CR,CRI,Costa Rica
+22,CI,CIV,C�te d'Ivoire
+23,HR,HRV,Croatia
+24,CY,CYP,Cyprus
+25,CZ,CZE,Czechia
+26,DK,DNK,Denmark
+27,DO,DOM,Dominican Republic
+28,EC,ECU,Ecuador
+29,EG,EGY,"Egypt, Arab Rep."
+30,SV,SLV,El Salvador
+31,EE,EST,Estonia
+32,ET,ETH,Ethiopia
+33,FI,FIN,Finland
+34,FR,FRA,France
+35,GA,GAB,Gabon
+36,GM,GMB,"Gambia, The"
+37,DE,DEU,Germany
+38,GH,GHA,Ghana
+39,GR,GRC,Greece
+40,GT,GTM,Guatemala
+41,HN,HND,Honduras
+42,HK,HKG,"Hong Kong SAR, China"
+43,HU,HUN,Hungary
+44,IS,ISL,Iceland
+45,IN,IND,India
+46,ID,IDN,Indonesia
+47,IR,IRN,"Iran, Islamic Rep."
+48,IE,IRL,Ireland
+49,IL,ISR,Israel
+50,IT,ITA,Italy
+51,JM,JAM,Jamaica
+52,JP,JPN,Japan
+53,JO,JOR,Jordan
+54,KZ,KAZ,Kazakhstan
+55,KE,KEN,Kenya
+56,KR,KOR,"Korea, Rep."
+57,KW,KWT,Kuwait
+58,LV,LVA,Latvia
+59,LB,LBN,Lebanon
+60,LI,LTU,Lithuania
+61,LU,LUX,Luxembourg
+62,MG,MDG,Madagascar
+63,MW,MWI,Malawi
+64,MY,MYS,Malaysia
+65,ML,MLI,Mali
+66,MT,MLT,Malta
+67,MX,MEX,Mexico
+68,MD,MDA,Moldova
+69,MA,MAR,Morocco
+70,MZ,MOZ,Mozambique
+71,NL,NLD,Netherlands
+72,NZ,NZL,New Zealand
+73,NI,NIC,Nicaragua
+74,NO,NOR,Norway
+75,PK,PAK,Pakistan
+76,PA,PAN,Panama
+77,PY,PRY,Paraguay
+78,PE,PER,Peru
+79,PH,PHL,Philippines
+80,PL,POL,Poland
+81,PT,PRT,Portugal
+82,RO,ROU,Romania
+83,RU,RUS,Russian Federation
+84,SA,SAU,Saudi Arabia
+85,SN,SEN,Senegal
+86,RS,SRB,Serbia
+87,SG,SGP,Singapore
+88,SK,SVK,Slovak Republic
+89,SI,SVN,Slovenia
+90,ZA,ZAF,South Africa
+91,ES,ESP,Spain
+92,LK,LKA,Sri Lanka
+93,SE,SWE,Sweden
+94,CH,CHE,Switzerland
+95,TZ,TZA,Tanzania
+96,TH,THA,Thailand
+97,TN,TUN,Tunisia
+98,TR,TUR,T�rkiye
+99,UG,UGA,Uganda
+100,UA,UKR,Ukraine
+101,AE,ARE,United Arab Emirates
+102,GB,GBR,United Kingdom
+103,US,USA,United States
+104,UY,URY,Uruguay
+105,ZM,ZMB,Zambia
+106,ZW,ZWE,Zimbabwe
+487,LR,LBR,Liberia
+513,SL,SLE,Sierra Leone
