@@ -5,30 +5,30 @@ database:
       driver: "mysqlconnector"
       host: "localhost"
       port: 3306
-      schema: "WorldGovernanceIndicators"
-      username: "admin"
-      password: "123"
+      schema: "wgi"
+      username: "root"
+      password: "admin"
     doing-bussiness:
       dialect: "mysql"
       driver: "mysqlconnector"
       host: "localhost"
       port: 3306
-      schema: "DoingBusiness"
-      username: "admin"
-      password: "123"
+      schema: "db"
+      username: "root"
+      password: "admin"
     transformation-index:
       dialect: "mysql"
       driver: "mysqlconnector"
       host: "localhost"
       port: 3306
-      schema: "TransformationIndex"
-      username: "admin"
-      password: "123"
+      schema: "ti"
+      username: "root"
+      password: "admin"
     economic-freedom:
       dialect: "mysql"
       driver: "mysqlconnector"
       host: "localhost"
       port: 3306
-      schema: "EconomicFreedom"
-      username: "admin"
-      password: "123"
+      schema: "ef"
+      username: "root"
+      password: "admin"

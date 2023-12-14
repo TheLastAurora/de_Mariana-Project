@@ -6,7 +6,7 @@ import sqlalchemy as sql
 
 
 class DatabaseConnection:
-    __slots__ = ("db_name", "credentials", "engine", "logger")
+    __slots__ = ("db_name", "credentials", "connection", "logger")
     __instances = {}
 
     def __new__(cls, db_name):
@@ -15,7 +15,7 @@ class DatabaseConnection:
             instance.db_name = db_name
             instance.logger = instance._get_logger()
             instance.credentials = instance._get_credentials()
-            instance.engine = instance._create_engine()
+            instance.connection = instance._create_engine().connect()
             cls.__instances[db_name] = instance
         return cls.__instances[db_name]
 
@@ -23,7 +23,7 @@ class DatabaseConnection:
         self.db_name = db_name
         self.logger = self._get_logger()
         self.credentials = self._get_credentials()
-        self.engine = self._create_engine()
+        self.connection = self._create_engine().connect()
 
     def _get_credentials(self) -> dict:
         cwd = os.path.dirname(os.path.realpath(__file__))
@@ -57,13 +57,13 @@ class DatabaseConnection:
         )
         return logger
 
-    def _create_engine(self) -> sql.Engine:
+    def _create_engine(self) -> sql.engine.Engine:
         try:
             return sql.create_engine(
                 "{dialect}+{driver}://{username}:{password}@{host}:{port}/{schema}".format(
                     **self._get_credentials()
                 )
-            )
+            ) # type: ignore
         except ConnectionError as ce:
             self.logger.exception("Failed to instantiate engine: %s", str(ce))
             raise ce
