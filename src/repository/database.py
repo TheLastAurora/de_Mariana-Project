@@ -67,3 +67,4 @@ class DatabaseConnection:
         except ConnectionError as ce:
             self.logger.exception("Failed to instantiate engine: %s", str(ce))
             raise ce
+        

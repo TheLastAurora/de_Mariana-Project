@@ -1,6 +1,7 @@
 # Ignoring DUMP files (just run the notebooks)
 
 src/repository/DUMP/
+src/config.yaml
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
