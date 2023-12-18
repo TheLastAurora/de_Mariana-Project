@@ -1,34 +1,34 @@
 database:
   connections:
     world-governance-index:
-      dialect: "mysql"
-      driver: "mysqlconnector"
-      host: "localhost"
-      port: 3306
+      dialect: "postgresql"
+      driver: "psycopg2"
+      host: "172.18.184.130"
+      port: 5432
       schema: "wgi"
-      username: "root"
+      username: "postgres"
       password: "admin"
     doing-bussiness:
-      dialect: "mysql"
-      driver: "mysqlconnector"
-      host: "localhost"
-      port: 3306
+      dialect: "postgresql"
+      driver: "psycopg2"
+      host: "172.18.184.130"
+      port: 5432
       schema: "db"
-      username: "root"
+      username: "postgres"
       password: "admin"
     transformation-index:
-      dialect: "mysql"
-      driver: "mysqlconnector"
-      host: "localhost"
-      port: 3306
+      dialect: "postgresql"
+      driver: "psycopg2"
+      host: "172.18.184.130"
+      port: 5432
       schema: "ti"
-      username: "root"
+      username: "postgres"
       password: "admin"
     economic-freedom:
-      dialect: "mysql"
-      driver: "mysqlconnector"
-      host: "localhost"
-      port: 3306
+      dialect: "postgresql"
+      driver: "psycopg2"
+      host: "172.18.184.130"
+      port: 5432
       schema: "ef"
-      username: "root"
+      username: "postgres"
       password: "admin"
