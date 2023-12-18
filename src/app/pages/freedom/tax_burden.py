@@ -6,8 +6,5 @@ from dash.dependencies import Input
 from dash.dependencies import Output
 from dash.dependencies import State
 
-def create_freedom_layout(app: dash.Dash) -> html.Div:
-    return html.Div()
-
-def create_state_governance_layout(app: dash.Dash) -> html.Div:
+def create_page(app: dash.Dash) -> html.Div:
     return html.Div()

@@ -3,7 +3,7 @@ database:
     world-governance-index:
       dialect: "postgresql"
       driver: "psycopg2"
-      host: "localhost"
+      host: "172.18.184.130"
       port: 5432
       schema: "wgi"
       username: "postgres"
@@ -11,7 +11,7 @@ database:
     doing-bussiness:
       dialect: "postgresql"
       driver: "psycopg2"
-      host: "localhost"
+      host: "172.18.184.130"
       port: 5432
       schema: "db"
       username: "postgres"
@@ -19,7 +19,7 @@ database:
     transformation-index:
       dialect: "postgresql"
       driver: "psycopg2"
-      host: "localhost"
+      host: "172.18.184.130"
       port: 5432
       schema: "ti"
       username: "postgres"
@@ -27,7 +27,7 @@ database:
     economic-freedom:
       dialect: "postgresql"
       driver: "psycopg2"
-      host: "localhost"
+      host: "172.18.184.130"
       port: 5432
       schema: "ef"
       username: "postgres"
