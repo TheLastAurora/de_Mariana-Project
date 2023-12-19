@@ -1,0 +1,18 @@
+/* styles.css */
+.sidebar-freedom {
+    background-color: #e2a600;
+    border-right: 1px solid #ccc;
+}
+
+.sidebar-state-governance{
+    background-color: #b90b0b;
+    border-right: 1px solid #ccc;
+}
+
+.content {
+    padding: 20px;
+}
+
+.main-content {
+    margin-top: 20px;
+}

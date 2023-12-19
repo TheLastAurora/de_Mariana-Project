@@ -1,5 +1,4 @@
 import dash
-from app import app
 from dash import dcc
 from dash import html
 from dash.dependencies import Input
