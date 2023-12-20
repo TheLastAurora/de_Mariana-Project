@@ -3,8 +3,6 @@ from dash import dcc
 from dash import html
 from dash.dependencies import Input
 from dash.dependencies import Output
-from dash.dependencies import State
+import polars as pl
 
-
-def create_page(app: dash.Dash) -> html.Div:
-    return html.Div()
+layout = html.Div()

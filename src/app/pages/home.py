@@ -1,9 +1,8 @@
 import dash
-from dash import dcc, html
+from dash import dcc
+from dash import html
 from dash.dependencies import Input
 from dash.dependencies import Output
-from dash.dependencies import State
 
+layout = html.Div()
 
-def create_page(app: dash.Dash) -> html.Div:
-    return html.Div()

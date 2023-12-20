@@ -4341,7 +4341,7 @@ fieldset:disabled .btn {
 }
 
 .nav-pills {
-    --bs-nav-pills-border-radius: var(--bs-border-radius);
+    --bs-nav-pills-border-radius: 0;
     --bs-nav-pills-link-active-color: #fff;
     --bs-nav-pills-link-active-bg: #1a1a1a
 }

@@ -1,50 +1,67 @@
-from dash import Input, Output, html, dcc
-from components import layouts
-from pages import home, error_404
-from pages import state_governance
-from pages import freedom
-from components import layouts
-import dash
-import dash_bootstrap_components as dbc
+from typing import Tuple
 
-app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP], use_pages=True)
+from dash import Input, Output, html, dcc
+from pages import (
+    home,
+    civil_rights,
+    market_competition,
+    tax_burden,
+    govern_effectiveness,
+    economic_sustentability,
+    institutional_stability,
+    error_404,
+)
+from components.sidebar import create_sidebar
+import dash_bootstrap_components as dbc
+import dash
+
+
+app = dash.Dash(
+    __name__,
+    external_stylesheets=[dbc.themes.BOOTSTRAP],
+    use_pages=True,
+    suppress_callback_exceptions=True,
+)
+app.layout = html.Div(
+    [
+        dcc.Location(id="url", refresh=False),
+        html.Div(id="sidebar"),
+        html.Div(id="page-content", children=[]),
+        html.Link(rel="stylesheet", href="/assets/style.css")
+    ]
+)
 app.css.append_css({"external_url": "styles.css"})
+app.title = "de Mariana"
 app._favicon = "logo.png"
 
 
-@app.callback(Output("page-content-container", "children"), Input("url", "pathname"))
-def render_page(pathname: str) -> html.Div:
-    # root
-    if pathname == "/":
-        return home.create_page(app)
+@app.callback(
+    [Output("page-content", "children"), Output("sidebar", "children")],
+    [Input("url", "pathname")],
+)
+def render_page(pathname: str) -> Tuple[html.Div, html.Div]:
+    section = pathname.split("/")[1]
+    sidebar = create_sidebar(section)
+    match pathname:
+        case None:
+            layout = home.layout
+        case "/freedom/civil-rights":
+            layout = civil_rights.layout
+        case "/freedom/market-competition":
+            layout = market_competition.layout
+        case "/freedom/tax-burden":
+            layout = tax_burden.layout
 
-    path = pathname.split("/")[1]
-    # Freedom
-    if path == "freedom":
-        app.layout = layouts.layout(path)
-        if pathname == "/freedom/civil_rights":
-            return freedom.civil_rights.create_page(app)
-        elif pathname == "/freedom/market-competition":
-            return freedom.market_competition.create_page(app)
-        elif pathname == "/freedom/tax-burden":
-            return freedom.tax_burden.create_page(app)
-        else:
-            return error_404.create_page()
+        case "/state-governance/govern-effectiveness":
+            layout = govern_effectiveness.layout
+        case "/state-governance/economic-sustainability":
+            layout = economic_sustentability.layout
+        case "/state-governance/institutional-stability":
+            layout = institutional_stability.layout
 
-    # State Governance
-    elif path == "state-governance":
-        app.layout = layouts.layout(path)
-        if pathname == "/state-governance/govern-effectiveness":
-            return state_governance.govern_effectiveness.create_page(app)
-        elif pathname == "/state-governance/economic-sustentability":
-            return state_governance.economic_sustentability.create_page(app)
-        elif pathname == "/state-governance/institutional-stability":
-            return state_governance.institutional_stability.create_page(app)
-        else:
-            return error_404.create_page()
-    # Errors
-    else:
-        return error_404.create_page()
+        case _:
+            layout = error_404.layout
+    return sidebar, layout
 
 
 if __name__ == "__main__":

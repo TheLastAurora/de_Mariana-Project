@@ -1,12 +1,45 @@
 /* styles.css */
-.sidebar-freedom {
-    background-color: #e2a600;
-    border-right: 1px solid #ccc;
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    padding-top: 1rem;
+    width: auto;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    /* Add a subtle box shadow */
+    transition: width 0.3s ease;
 }
 
-.sidebar-state-governance{
-    background-color: #b90b0b;
-    border-right: 1px solid #ccc;
+.sidebar hr:first-of-type{
+    margin-right: 30%;
+    margin-left: 30%;
+}
+
+
+.sidebar a:hover {
+    background-color: #c5c5c5;
+}
+
+.sidebar h2 {
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.sidebar p {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    width: 13rem;
+    text-align: justify;
+    word-wrap: break-word;
+}
+
+.sidebar-freedom h2{
+    margin-left: 2rem;
+}
+
+.sidebar-state-governance :active.sidebar-link{
 }
 
 .content {
