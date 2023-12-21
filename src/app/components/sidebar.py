@@ -23,7 +23,7 @@ def create_sidebar(path: str) -> html.Div:
                         [
                             dbc.NavLink(
                                 "Civil Rights",
-                                href="/freedom/civil_rights",
+                                href="/freedom/civil-rights",
                                 active="exact",
                                 className="sidebar-link",
                             ),

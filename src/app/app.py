@@ -1,3 +1,11 @@
+import os
+import sys
+
+current_folder = os.path.dirname(os.path.abspath(__file__))
+dags_path = os.path.join(current_folder, "..", "dags")
+sys.path.insert(0, dags_path)
+
+
 from typing import Tuple
 from dash import Input, Output, html, dcc
 from pages import (

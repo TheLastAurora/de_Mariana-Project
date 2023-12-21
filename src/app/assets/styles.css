@@ -4,11 +4,15 @@
     display: flex;
     flex-direction: row;
     height: 100%;
-    width: 250px;
+    /* width: 250px; */
+    overflow: hidden;
 }
 
-#page-content{
+#page-content {
     margin-top: 0.5rem;
+    /* width: max-content; */
+    overflow: scroll;
+    width: 100%;
 }
 
 #sidebar {
@@ -54,3 +58,21 @@
 #sidebar-state-governance>h2 {
     font-size: x-large;
 }
+
+/*----- Freedom Pages ------ */
+
+/* Civil Rights */
+
+#civil-rights-container {}
+
+/* Market Competition */
+
+#market-competition {}
+
+/* Tax Burden */
+
+#tax-burden {}
+
+/* ----- State Governance */
+
+#institutional-stability-container {}
