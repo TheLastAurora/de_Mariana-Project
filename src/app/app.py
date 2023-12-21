@@ -1,5 +1,4 @@
 from typing import Tuple
-
 from dash import Input, Output, html, dcc
 from pages import (
     home,
@@ -25,10 +24,11 @@ app = dash.Dash(
 app.layout = html.Div(
     [
         dcc.Location(id="url", refresh=False),
+        html.Link(rel="stylesheet", href="/assets/style.css"),
         html.Div(id="sidebar"),
         html.Div(id="page-content", children=[]),
-        html.Link(rel="stylesheet", href="/assets/style.css")
-    ]
+    ],
+    id="full-page",
 )
 app.css.append_css({"external_url": "styles.css"})
 app.title = "de Mariana"
@@ -61,7 +61,7 @@ def render_page(pathname: str) -> Tuple[html.Div, html.Div]:
 
         case _:
             layout = error_404.layout
-    return sidebar, layout
+    return layout, sidebar
 
 
 if __name__ == "__main__":

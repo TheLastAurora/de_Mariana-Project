@@ -1,5 +1,4 @@
 import os
-from typing import Self
 import yaml
 import logging
 import sqlalchemy as sql

@@ -1,18 +1,30 @@
 /* styles.css */
 
-.sidebar {
-    position: fixed;
+#full-page {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 250px;
+}
+
+#page-content{
+    margin-top: 0.5rem;
+}
+
+#sidebar {
+    height: 100vh;
+    margin-right: 1rem;
     top: 0;
     left: 0;
     bottom: 0;
     padding-top: 1rem;
-    width: auto;
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-    /* Add a subtle box shadow */
     transition: width 0.3s ease;
 }
 
-.sidebar hr:first-of-type{
+.sidebar {}
+
+.sidebar hr:first-of-type {
     margin-right: 30%;
     margin-left: 30%;
 }
@@ -35,17 +47,10 @@
     word-wrap: break-word;
 }
 
-.sidebar-freedom h2{
+#sidebar-freedom h2 {
     margin-left: 2rem;
 }
 
-.sidebar-state-governance :active.sidebar-link{
-}
-
-.content {
-    padding: 20px;
-}
-
-.main-content {
-    margin-top: 20px;
+#sidebar-state-governance>h2 {
+    font-size: x-large;
 }

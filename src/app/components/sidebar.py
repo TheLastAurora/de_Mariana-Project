@@ -44,7 +44,8 @@ def create_sidebar(path: str) -> html.Div:
                         pills=True,
                     ),
                 ],
-                className="sidebar sidebar-freedom",
+                className="sidebar",
+                id="sidebar-freedom"
             )
         case "state-governance":
             return html.Div(
@@ -91,7 +92,8 @@ def create_sidebar(path: str) -> html.Div:
                         pills=True,
                     ),
                 ],
-                className="sidebar sidebar-state-governance",
+                className="sidebar",
+                id="sidebar-state-governance"
             )
         case _:
             return html.Div(className="sidebar")
