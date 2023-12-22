@@ -13,24 +13,31 @@ tax_per_country_df = taxes.tax_per_country()
 
 layout = dbc.Container(
     [
+        html.H2(id="selected-country", style={"font-weight": "bold"}),
+        dcc.Dropdown(
+            options=[
+                {"label": country, "value": country}
+                for country in tax_per_country_df["name"].unique().sort()
+            ],
+            placeholder="Select a Country",
+            value="Brazil",
+            id="dropdown-countries",
+        ),
         html.Div(
             [
                 html.H3("Tax progression over years"),
-                dcc.Dropdown(
-                    options=[
-                        {"label": country, "value": country}
-                        for country in tax_per_country_df["name"].unique().sort()
-                    ],
-                    placeholder="Select a Country",
-                    id="dropdown-countries",
-                ),
                 dcc.Graph(id="taxes-year-graph"),
             ]
         ),
         html.Div(),
     ],
-    id="civil-rights-container"
+    id="civil-rights-container",
 )
+
+
+@callback(Output("selected-country", "children"), Input("dropdown-countries", "value"))
+def get_selected_country(value):
+    return value
 
 
 @callback(
