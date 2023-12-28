@@ -21,13 +21,19 @@ from pages import (
     error_404,
 )
 
-from countries import get_countries
+from countries import countries_per_region
 from components.sidebar import create_sidebar
 import polars as pl
 import dash_bootstrap_components as dbc
 import dash
 
-COUNTRIES = get_countries()
+# Display the countries in the list
+COUNTRIES = countries_per_region()
+country_group = []
+for sr, cs in COUNTRIES.iter_rows():
+    country_group.append(dbc.ListGroupItem(sr.upper(), style={"font-weight": "900"}))
+    for c in cs:
+        country_group.append(dbc.ListGroupItem(c, style={"font-weight": "light"}, action=True))
 
 app = dash.Dash(
     __name__,
@@ -53,11 +59,9 @@ app.layout = html.Div(
                     n_clicks=0,
                 ),
                 dbc.Collapse(
-                    dbc.ListGroup(
-                        [
-                                    
-                        ]
-                    ),
+                    [
+                        dbc.ListGroup(country_group, flush=True),
+                    ],
                     id="list-collapse",
                     is_open=False,
                 ),

@@ -87,6 +87,8 @@
 
 #globe-div {
     display: block;
+    overflow: scroll;
+    height: 100vh;
 }
 
 #list-collapse {
