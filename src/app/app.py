@@ -3,11 +3,13 @@ import sys
 
 current_folder = os.path.dirname(os.path.abspath(__file__))
 dags_path = os.path.join(current_folder, "..", "dags")
+utils_path = os.path.join(current_folder, "..", "utils")
 sys.path.insert(0, dags_path)
+sys.path.insert(0, utils_path)
 
 
 from typing import Tuple
-from dash import Input, Output, html, dcc
+from dash import Input, Output, State, html, dcc
 from pages import (
     home,
     civil_rights,
@@ -18,10 +20,14 @@ from pages import (
     institutional_stability,
     error_404,
 )
+
+from countries import get_countries
 from components.sidebar import create_sidebar
+import polars as pl
 import dash_bootstrap_components as dbc
 import dash
 
+COUNTRIES = get_countries()
 
 app = dash.Dash(
     __name__,
@@ -35,6 +41,29 @@ app.layout = html.Div(
         html.Link(rel="stylesheet", href="/assets/style.css"),
         html.Div(id="sidebar"),
         html.Div(id="page-content", children=[]),
+        html.Div(
+            [
+                dbc.Button(
+                    [
+                        html.Img(src="/assets/globe.png", id="globe"),
+                        html.Img(src="/assets/globe_inverse.png", id="globe-inverse"),
+                    ],
+                    id="globe-button",
+                    color="none",
+                    n_clicks=0,
+                ),
+                dbc.Collapse(
+                    dbc.ListGroup(
+                        [
+                                    
+                        ]
+                    ),
+                    id="list-collapse",
+                    is_open=False,
+                ),
+            ],
+            id="globe-div",
+        ),
     ],
     id="full-page",
 )
@@ -44,7 +73,10 @@ app._favicon = "logo.png"
 
 
 @app.callback(
-    [Output("page-content", "children"), Output("sidebar", "children")],
+    [
+        Output("page-content", "children"),
+        Output("sidebar", "children"),
+    ],
     [Input("url", "pathname")],
 )
 def render_page(pathname: str) -> Tuple[html.Div, html.Div]:
@@ -70,6 +102,17 @@ def render_page(pathname: str) -> Tuple[html.Div, html.Div]:
         case _:
             layout = error_404.layout
     return layout, sidebar
+
+
+@app.callback(
+    Output("list-collapse", "is_open"),
+    [Input("globe-button", "n_clicks")],
+    [State("list-collapse", "is_open")],
+)
+def toggle_collapse(n, is_open):
+    if n:
+        return not is_open
+    return is_open
 
 
 if __name__ == "__main__":

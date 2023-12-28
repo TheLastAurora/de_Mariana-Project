@@ -4,14 +4,12 @@
     display: flex;
     flex-direction: row;
     height: 100%;
-    /* width: 250px; */
     overflow: hidden;
 }
 
 #page-content {
     margin-top: 0.5rem;
-    /* width: max-content; */
-    overflow: scroll;
+    overflow: hidden;
     width: 100%;
 }
 
@@ -58,6 +56,45 @@
 #sidebar-state-governance>h2 {
     font-size: x-large;
 }
+
+#globe,
+#globe-inverse {
+    position: fixed;
+    margin-top: 1rem;
+    margin-right: 2rem;
+    top: 0;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    transition: opacity 0.3s;
+}
+
+#globe-inverse {
+    opacity: 0;
+    z-index: 2;
+}
+
+#globe:hover {
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+#globe-inverse:hover {
+    opacity: 1;
+    transition: opacity 0.3s;
+}
+
+#globe-div {
+    display: block;
+}
+
+#list-collapse {
+    margin-top: 3rem;
+    margin-right: 1rem;
+}
+
+
 
 /*----- Freedom Pages ------ */
 
