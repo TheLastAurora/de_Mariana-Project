@@ -67,6 +67,7 @@
     width: 50px;
     height: 50px;
     position: absolute;
+    z-index: 1;
     transition: opacity 0.3s;
 }
 
@@ -88,14 +89,30 @@
 #globe-div {
     display: block;
     overflow: scroll;
+    overflow-x: hidden;
     height: 100vh;
 }
 
-#list-collapse {
-    margin-top: 3rem;
-    margin-right: 1rem;
+.list-group {
 }
 
+#list-collapse-header {
+    position: fixed;
+    z-index: 1;
+    top: 2rem;
+}
+
+#list-collapse {
+    padding-top: 3rem;
+    padding-right: 1rem;
+}
+
+/* BOOTSTRAP */
+
+.collapsing.collapse-horizontal {
+    transition: width .15s;
+    transition-timing-function: cubic-bezier(0.1, 0.7, 0.7, 0.3);
+}
 
 
 /*----- Freedom Pages ------ */

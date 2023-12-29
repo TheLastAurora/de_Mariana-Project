@@ -1,5 +1,6 @@
 import os
 import sys
+from xmlrpc.client import boolean
 
 current_folder = os.path.dirname(os.path.abspath(__file__))
 dags_path = os.path.join(current_folder, "..", "dags")
@@ -9,7 +10,7 @@ sys.path.insert(0, utils_path)
 
 
 from typing import Tuple
-from dash import Input, Output, State, html, dcc
+from dash import Input, Output, State, html, dcc, ctx, ALL
 from pages import (
     home,
     civil_rights,
@@ -21,19 +22,12 @@ from pages import (
     error_404,
 )
 
-from countries import countries_per_region
+from countries import country_group
 from components.sidebar import create_sidebar
 import polars as pl
 import dash_bootstrap_components as dbc
 import dash
 
-# Display the countries in the list
-COUNTRIES = countries_per_region()
-country_group = []
-for sr, cs in COUNTRIES.iter_rows():
-    country_group.append(dbc.ListGroupItem(sr.upper(), style={"font-weight": "900"}))
-    for c in cs:
-        country_group.append(dbc.ListGroupItem(c, style={"font-weight": "light"}, action=True))
 
 app = dash.Dash(
     __name__,
@@ -41,6 +35,7 @@ app = dash.Dash(
     use_pages=True,
     suppress_callback_exceptions=True,
 )
+
 app.layout = html.Div(
     [
         dcc.Location(id="url", refresh=False),
@@ -60,9 +55,11 @@ app.layout = html.Div(
                 ),
                 dbc.Collapse(
                     [
-                        dbc.ListGroup(country_group, flush=True),
+                        html.H5(id="selected-country"),
+                        dbc.ListGroup(country_group(), flush=True),
                     ],
                     id="list-collapse",
+                    dimension="width",
                     is_open=False,
                 ),
             ],
@@ -113,10 +110,23 @@ def render_page(pathname: str) -> Tuple[html.Div, html.Div]:
     [Input("globe-button", "n_clicks")],
     [State("list-collapse", "is_open")],
 )
-def toggle_collapse(n, is_open):
+def toggle_collapse(n, is_open) -> bool:
     if n:
         return not is_open
     return is_open
+
+
+@app.callback(
+    [Output("selected-country", "children"), Output("selected-country", "active")],
+    Input({"type": "list-group-item", "index": ALL}, "n_clicks"),
+    prevent_initial_call=True,
+)
+def update_country(_) -> str | bool:
+    clicked_country = ctx.triggered_id.index
+    for c in country_group():
+        if c.children == clicked_country:
+            return c.children, True
+    return None, False
 
 
 if __name__ == "__main__":
