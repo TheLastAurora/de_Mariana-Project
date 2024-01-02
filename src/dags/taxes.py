@@ -1,10 +1,3 @@
-import sys
-import os
-
-current_folder = os.path.dirname(os.path.abspath(__file__))
-dags_path = os.path.join(current_folder, "..", "repository")
-sys.path.insert(0, dags_path)
-
 import database
 import polars as pl
 

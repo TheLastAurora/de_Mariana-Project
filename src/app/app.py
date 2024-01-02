@@ -1,16 +1,19 @@
 import os
+from pprint import pprint
 import sys
-from xmlrpc.client import boolean
 
 current_folder = os.path.dirname(os.path.abspath(__file__))
 dags_path = os.path.join(current_folder, "..", "dags")
 utils_path = os.path.join(current_folder, "..", "utils")
+repository_path = os.path.join(current_folder, "..", "repository")
+sys.path.insert(0, repository_path)
 sys.path.insert(0, dags_path)
 sys.path.insert(0, utils_path)
 
 
 from typing import Tuple
-from dash import Input, Output, State, html, dcc, ctx, ALL
+from dash import Dash, Input, Output, State, html, dcc, ctx, ALL
+from dash.exceptions import PreventUpdate
 from pages import (
     home,
     civil_rights,
@@ -26,10 +29,10 @@ from countries import country_group
 from components.sidebar import create_sidebar
 import polars as pl
 import dash_bootstrap_components as dbc
-import dash
+import numpy as np
 
 
-app = dash.Dash(
+app = Dash(
     __name__,
     external_stylesheets=[dbc.themes.BOOTSTRAP],
     use_pages=True,
@@ -56,7 +59,9 @@ app.layout = html.Div(
                 dbc.Collapse(
                     [
                         html.H5(id="selected-country"),
-                        dbc.ListGroup(country_group(), flush=True),
+                        dbc.ListGroup(
+                            country_group(), flush=True, id="sidebar-country-list"
+                        ),
                     ],
                     id="list-collapse",
                     dimension="width",
@@ -80,7 +85,7 @@ app._favicon = "logo.png"
     ],
     [Input("url", "pathname")],
 )
-def render_page(pathname: str) -> Tuple[html.Div, html.Div]:
+def render_page(pathname: str) -> Tuple[html.Div | dbc.Container, html.Div]:
     section = pathname.split("/")[1]
     sidebar = create_sidebar(section)
     match pathname:
@@ -117,16 +122,29 @@ def toggle_collapse(n, is_open) -> bool:
 
 
 @app.callback(
-    [Output("selected-country", "children"), Output("selected-country", "active")],
-    Input({"type": "list-group-item", "index": ALL}, "n_clicks"),
+    [
+        Output("sidebar-country-list", "children"),
+        Output("selected-country", "children"),
+    ],
+    [
+        Input({"type": "list-group-item", "index": ALL}, "n_clicks"),
+    ],
+    State("sidebar-country-list", "children"),
     prevent_initial_call=True,
 )
-def update_country(_) -> str | bool:
-    clicked_country = ctx.triggered_id.index
-    for c in country_group():
-        if c.children == clicked_country:
-            return c.children, True
-    return None, False
+def update_country(clicks, countries):
+    print(clicks)
+    click_index = (
+        np.nonzero(np.array(clicks))[0][0] if np.any(np.array(clicks)) else None
+    )
+    print(click_index)
+    if click_index == None:
+        raise PreventUpdate
+    for c in countries:
+        country_id = c["props"].get("id")
+        if country_id and country_id["index"] == click_index:
+            c["props"].active = True
+            return countries, np.zeros(len(clicks), dtype=int), c.children
 
 
 if __name__ == "__main__":

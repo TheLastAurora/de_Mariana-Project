@@ -1,10 +1,14 @@
 import polars as pl
 import dash_bootstrap_components as dbc
+import database
+
+db = database.DatabaseConnection("economic-freedom").connection
 
 
 def countries_per_region() -> pl.DataFrame:
-    countries = pl.read_csv("src/repository/DUMP/ISO CODE.csv")
-    countries = countries.select(pl.col(["name", "alpha-3", "region"]))
+    countries = pl.read_database(
+        """SELECT name, "alpha-3", region from iso_codes""", connection=db
+    )
     return (
         countries.group_by("region")
         .agg(pl.col("name"))
@@ -16,6 +20,7 @@ def countries_per_region() -> pl.DataFrame:
 def country_group() -> list:
     COUNTRIES = countries_per_region()
     country_group = []
+    i = 0
     for sr, cs in COUNTRIES.iter_rows():
         country_group.append(
             dbc.ListGroupItem(sr.upper(), style={"font-weight": "900"})
@@ -24,10 +29,12 @@ def country_group() -> list:
             country_group.append(
                 dbc.ListGroupItem(
                     c,
-                    style={"font-weight": "light"},
                     action=True,
-                    id={"type": "list-group-item", "index": c}
+                    active=False,
+                    style={"font-weight": "light", "cursor": "pointer"},
+                    id={"type": "list-group-item", "index": i},
+                    n_clicks=0,
                 )
             )
-    # I'm ignoring Antartica for AESTHETIC reasons in the sidebar.
-    return country_group[2:]
+            i += 1
+    return country_group
