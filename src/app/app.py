@@ -58,7 +58,7 @@ app.layout = html.Div(
                 ),
                 dbc.Collapse(
                     [
-                        html.H5(id="selected-country"),
+                        html.H5("Select a Country", className="list-collapse-header"),
                         dbc.ListGroup(
                             country_group(), flush=True, id="sidebar-country-list"
                         ),
@@ -125,26 +125,25 @@ def toggle_collapse(n, is_open) -> bool:
     [
         Output("sidebar-country-list", "children"),
         Output("selected-country", "children"),
+        Output("selected-country", "value"),
+        Output("globe-button", "n_clicks"),
     ],
     [
-        Input({"type": "list-group-item", "index": ALL}, "n_clicks"),
+        Input({"type": "list-group-item", "index": ALL}, "active"),
+        # TODO: Make so when clicking the button, it gets active automaticatly. Also, wont be using selected-country n_clicks anymore. More responsive. 
     ],
     State("sidebar-country-list", "children"),
-    prevent_initial_call=True,
 )
-def update_country(clicks, countries):
-    print(clicks)
-    click_index = (
-        np.nonzero(np.array(clicks))[0][0] if np.any(np.array(clicks)) else None
-    )
+def update_country(clicked, countries):
+    click_index = np.where(clicked)
     print(click_index)
-    if click_index == None:
-        raise PreventUpdate
     for c in countries:
-        country_id = c["props"].get("id")
+        country_id = c.get("props").get("id")
+        c.get("props")["active"] = False
         if country_id and country_id["index"] == click_index:
-            c["props"].active = True
-            return countries, np.zeros(len(clicks), dtype=int), c.children
+            ctry = c
+    ctry.get("props")["active"] = True
+    return countries, ctry.get("props")["children"], ctry.get("props")["key"], 1
 
 
 if __name__ == "__main__":

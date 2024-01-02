@@ -1,4 +1,7 @@
 /* styles.css */
+body {
+    overflow: hidden;
+}
 
 #full-page {
     display: flex;
@@ -96,7 +99,7 @@
 .list-group {
 }
 
-#list-collapse-header {
+.list-collapse-header {
     position: fixed;
     z-index: 1;
     top: 2rem;
