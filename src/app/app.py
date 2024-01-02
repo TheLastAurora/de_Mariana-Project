@@ -77,6 +77,9 @@ app.css.append_css({"external_url": "styles.css"})
 app.title = "de Mariana"
 app._favicon = "logo.png"
 
+# Last selected country, or "Brazil", for default.
+LAST_SELECTED_COUNTRY = 71
+
 
 @app.callback(
     [
@@ -129,21 +132,28 @@ def toggle_collapse(n, is_open) -> bool:
         Output("globe-button", "n_clicks"),
     ],
     [
-        Input({"type": "list-group-item", "index": ALL}, "active"),
-        # TODO: Make so when clicking the button, it gets active automaticatly. Also, wont be using selected-country n_clicks anymore. More responsive. 
+        Input({"type": "list-group-item", "index": ALL}, "n_clicks"),
     ],
     State("sidebar-country-list", "children"),
 )
 def update_country(clicked, countries):
-    click_index = np.where(clicked)
-    print(click_index)
+    global LAST_SELECTED_COUNTRY
+    country_index = None
+    try:
+        country_index = np.nonzero(np.array(clicked))[0][0]
+    except IndexError:
+        country_index = LAST_SELECTED_COUNTRY
+    LAST_SELECTED_COUNTRY = country_index
+    country = None
     for c in countries:
         country_id = c.get("props").get("id")
         c.get("props")["active"] = False
-        if country_id and country_id["index"] == click_index:
-            ctry = c
-    ctry.get("props")["active"] = True
-    return countries, ctry.get("props")["children"], ctry.get("props")["key"], 1
+        c.get("props")["n_clicks"] = 0
+        if country_id and country_id["index"] == country_index:
+            country = c
+    
+    country.get("props")["active"] = True
+    return countries, country.get("props")["children"], country.get("props")["key"], 1
 
 
 if __name__ == "__main__":

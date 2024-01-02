@@ -13,11 +13,20 @@ layout = dbc.Container(
         html.H2(id="selected-country", style={"font-weight": "bold"}),
         html.Div(
             [
-                html.H4("Tax progression over years"),
-                dcc.Graph(id="taxes-year-graph"),
-            ]
+                dbc.Card(
+                    dbc.CardBody(
+                        [
+                            html.H3("34th", style={"font-weight": "bold"}),
+                            html.H4("WGI Overral Index"),
+                            html.P("Among the worst 46%"),
+                        ],
+                    ),
+                    className="info-card text-center",
+                ),
+            ],
+            className="cards-div",
+            style={"display": "flex", "flex-direction": "row"},
         ),
-        html.Div(),
     ],
     id="civil-rights-container",
 )
@@ -37,3 +46,8 @@ def update_taxes_country(country_id: int):
     fig.update_layout(xaxis_title="Year", yaxis_title="Tariffs")
     fig.update_xaxes(tickvals=df["year"].unique(), tickmode="array")
     return fig
+
+
+# @callback()
+# def test():
+#     pass

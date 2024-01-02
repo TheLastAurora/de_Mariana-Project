@@ -1,13 +1,13 @@
 import polars as pl
-import dash_bootstrap_components as dbc
+import dash_bootstrap_components as DBc
 import database
 
-db = database.DatabaseConnection("economic-freedom").connection
+DB = database.DatabaseConnection("economic-freedom").connection
 
 
 def countries_per_region() -> pl.DataFrame:
     countries = pl.read_database(
-        """SELECT id, name, "alpha-3", region from iso_codes""", connection=db
+        """SELECT id, name, "alpha-3", region from iso_codes""", connection=DB
     )
     return (
         countries.group_by("region")
@@ -19,7 +19,7 @@ def countries_per_region() -> pl.DataFrame:
 
 def country_by_id(id: int) -> str:
     country = pl.read_database(
-        f"SELECT name FROM iso_codes WHERE id = {id}", connection=db
+        f"SELECT name FROM iso_codes WHERE id = {id}", connection=DB
     ).item()
     return country
 
@@ -30,11 +30,11 @@ def country_group() -> list:
     i = 0
     for sr, cs in COUNTRIES.iter_rows():
         country_group.append(
-            dbc.ListGroupItem(sr.upper(), style={"font-weight": "900"})
+            DBc.ListGroupItem(sr.upper(), style={"font-weight": "900"})
         )
         for c in cs:
             country_group.append(
-                dbc.ListGroupItem(
+                DBc.ListGroupItem(
                     children=country_by_id(c),  # Country name
                     key=c,  # Country id
                     id={"type": "list-group-item", "index": i},

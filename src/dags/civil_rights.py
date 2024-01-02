@@ -24,3 +24,5 @@ def property_rights() -> pl.DataFrame:
         """,
         connection=conn_wgi
     )
+    
+# TODO: Start working with real logic!!!
