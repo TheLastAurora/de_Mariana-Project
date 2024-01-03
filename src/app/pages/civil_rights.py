@@ -32,20 +32,20 @@ layout = dbc.Container(
 )
 
 
-@callback(
-    Output("taxes-year-graph", "figure"),
-    Input("selected-country", "value"),
-)
-def update_taxes_country(country_id: int):
-    df = tax_per_country_df.filter(pl.col("country_id") == country_id)
-    fig = px.line(
-        df,
-        x="year",
-        y=["mean_tariff_rate", "standard_deviation_of_tariff_rates", "tariffs"],
-    )
-    fig.update_layout(xaxis_title="Year", yaxis_title="Tariffs")
-    fig.update_xaxes(tickvals=df["year"].unique(), tickmode="array")
-    return fig
+# @callback(
+#     Output("taxes-year-graph", "figure"),
+#     Input("selected-country", "value"),
+# )
+# def update_taxes_country(country_id: int):
+#     df = tax_per_country_df.filter(pl.col("country_id") == country_id)
+#     fig = px.line(
+#         df,
+#         x="year",
+#         y=["mean_tariff_rate", "standard_deviation_of_tariff_rates", "tariffs"],
+#     )
+#     fig.update_layout(xaxis_title="Year", yaxis_title="Tariffs")
+#     fig.update_xaxes(tickvals=df["year"].unique(), tickmode="array")
+#     return fig
 
 
 # @callback()
