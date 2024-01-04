@@ -3,6 +3,7 @@ import os
 from math import floor
 from typing import Tuple
 
+
 current_folder = os.path.dirname(os.path.abspath(__file__))
 dags_path = os.path.join(current_folder, "..", "repository")
 sys.path.insert(0, dags_path)
@@ -218,3 +219,15 @@ def freedom_of_expression_ranking() -> pl.DataFrame:
     )
 
     return df.sort(by=["ti_rank", "ef_rank", "wgi_rank"], nulls_last=True)
+
+
+def cr_per_country_year() -> pl.DataFrame:
+    ti_civil_rights = pl.read_database(
+        query="""
+    SELECT country_id, year, civil_rights 
+    FROM "freedom" 
+    ORDER BY country_id
+    """,
+        connection=conn_ti,
+    )
+    return ti_civil_rights

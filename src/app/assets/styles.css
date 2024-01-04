@@ -11,9 +11,15 @@ body {
 }
 
 #page-content {
+    display: flex;
     margin-top: 0.5rem;
     overflow: hidden;
     width: 100%;
+}
+
+#page-content>.container {
+    min-width: 100%;
+    margin: 0;
 }
 
 #sidebar {
@@ -96,8 +102,7 @@ body {
     height: 100vh;
 }
 
-.list-group {
-}
+.list-group {}
 
 .list-collapse-header {
     position: fixed;
@@ -122,8 +127,10 @@ body {
 
 /* Civil Rights */
 
-#civil-rights-container {
-    margin: 0;
+#civil-rights-container {}
+
+.info-card {
+    min-width: 32%;
 }
 
 /* Market Competition */

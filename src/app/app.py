@@ -13,6 +13,7 @@ sys.path.insert(0, utils_path)
 
 from typing import Tuple
 from dash import Dash, Input, Output, State, html, dcc, ctx, ALL
+from dash_bootstrap_templates import load_figure_template
 from dash.exceptions import PreventUpdate
 from pages import (
     home,
@@ -76,6 +77,7 @@ app.layout = html.Div(
 app.css.append_css({"external_url": "styles.css"})
 app.title = "de Mariana"
 app._favicon = "logo.png"
+load_figure_template("lux")
 
 # Last selected country, or "Brazil", for default.
 # This is not the country_id, but the index in list-group-item, instead.
