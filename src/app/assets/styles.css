@@ -122,7 +122,9 @@ body {
 
 /* Civil Rights */
 
-#civil-rights-container {}
+#civil-rights-container {
+    margin: 0;
+}
 
 /* Market Competition */
 

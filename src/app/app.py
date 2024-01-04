@@ -78,6 +78,7 @@ app.title = "de Mariana"
 app._favicon = "logo.png"
 
 # Last selected country, or "Brazil", for default.
+# This is not the country_id, but the index in list-group-item, instead.
 LAST_SELECTED_COUNTRY = 71
 
 
@@ -151,7 +152,7 @@ def update_country(clicked, countries):
         c.get("props")["n_clicks"] = 0
         if country_id and country_id["index"] == country_index:
             country = c
-    
+
     country.get("props")["active"] = True
     return countries, country.get("props")["children"], country.get("props")["key"], 1
 
