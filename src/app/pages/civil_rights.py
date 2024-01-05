@@ -20,6 +20,9 @@ tax_per_country_df = taxes.tax_per_country()
 property_rights_df = civil_rights.property_rights_ranking()
 freedom_of_labour_right_df = civil_rights.freedom_of_labour_ranking()
 freedom_of_expression_right_df = civil_rights.freedom_of_expression_ranking()
+religious_freedom_df = civil_rights.religious_freedom_score()
+
+# Graphs
 cr_per_country_year_df = civil_rights.cr_per_country_year()
 
 layout = dbc.Container(
@@ -41,9 +44,21 @@ layout = dbc.Container(
         ),
         html.Div(
             [
-                dcc.Graph(id="civil-rights-evolution-graph"),
-                dcc.Markdown(id="civil-rights-evolution-report"),
-            ]
+                html.Div(
+                    [
+                        dcc.Graph(id="civil-rights-evolution-graph"),
+                        dcc.Markdown(
+                            id="civil-rights-evolution-report", className="text-center"
+                        ),
+                    ],
+                ),
+                html.Div(
+                    dbc.Card(
+                        id="religious-freedom-card", className="info-card text-center"
+                    )
+                ),
+            ],
+            className="d-flex flex-row",
         ),
     ],
     id="civil-rights-container",
@@ -123,15 +138,27 @@ def freedom_of_expression_right(country_id: int) -> dbc.CardBody:
 )
 def civil_rights_evolution(country_id: int) -> Tuple[go.Figure, str]:
     df = cr_per_country_year_df
+
     fig = go.Figure()
     world_tendency = (
         df.group_by(by="year").agg(pl.col("civil_rights").mean()).sort(by="year")
     )
     country_tendency = df.filter(pl.col("country_id") == country_id).sort(by="year")
+    country_name = country_by_id(country_id)
+    region_name = (
+        df.filter(pl.col("country_id") == country_id).limit(1)["sub-region"].item()
+    )
+    region_tendency = (
+        df.group_by(by=["year", "sub-region"])
+        .agg(pl.col("civil_rights").mean())
+        .filter(pl.col("sub-region") == region_name)
+        .sort(by="year")
+    )
+
     fig.add_trace(
         go.Scatter(
             x=world_tendency["year"],
-            y=world_tendency["civil_rights"],
+            y=world_tendency["civil_rights"].round(1),
             name="World",
             mode="lines",
             connectgaps=True,
@@ -141,10 +168,21 @@ def civil_rights_evolution(country_id: int) -> Tuple[go.Figure, str]:
 
     fig.add_trace(
         go.Scatter(
+            x=region_tendency["year"],
+            y=region_tendency["civil_rights"].round(1),
+            name=region_name,
+            mode="lines",
+            connectgaps=True,
+            line={"color": "orange", "width": 3},
+        )
+    )
+
+    fig.add_trace(
+        go.Scatter(
             x=country_tendency["year"],
             y=country_tendency["civil_rights"],
             mode="lines",
-            name=country_by_id(country_id),
+            name=country_name,
             connectgaps=True,
             line={"color": "red", "width": 3},
         )
@@ -157,5 +195,18 @@ def civil_rights_evolution(country_id: int) -> Tuple[go.Figure, str]:
             title="Score",
             tickvals=list(range(11)),
         ),
-    ) # TODO: Get 0-10 y-axis values to work. 
-    return fig, "This is a report. Report me!"
+    )
+    percent = (
+        country_tendency["civil_rights"][-1] - country_tendency["civil_rights"][0]
+    ) / country_tendency["civil_rights"][-1]
+    time_span = country_tendency["year"][-1] - country_tendency["year"][0]
+    report = f"""The provided conditions for exercising Civil Rights in this country got overral {'**unchanged**'.upper() if percent == 0 else f'**{(abs(percent) * 100):.1f}% {"worst" if percent < 0 else "better"}**'.upper()} over the last {time_span} years."""
+    return fig, report
+
+
+@callback(
+    Output("religious-freedom-card", "children"), Input("selected-country", "value")
+)
+def religious_freedom_status(country_id: int) -> dbc.Card():
+    df = religious_freedom_df
+    print(df)

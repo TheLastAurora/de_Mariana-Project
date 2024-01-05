@@ -224,10 +224,43 @@ def freedom_of_expression_ranking() -> pl.DataFrame:
 def cr_per_country_year() -> pl.DataFrame:
     ti_civil_rights = pl.read_database(
         query="""
-    SELECT country_id, year, civil_rights 
-    FROM "freedom" 
+    SELECT f.country_id, f.year, i."sub-region", f.civil_rights 
+    FROM freedom f
+    INNER JOIN iso_codes i ON f.country_id = i.id 
     ORDER BY country_id
     """,
         connection=conn_ti,
     )
     return ti_civil_rights
+
+
+def religious_freedom_score() -> pl.DataFrame:
+    ti_freedom_right = pl.read_database(
+        query="""
+    SELECT country_id, no_interference_of_religious_dogmas
+    FROM freedom
+    WHERE year = 2020
+    ORDER BY country_id                                        
+    """,
+        connection=conn_ti,
+    )
+    status = {
+        (0, 3): "NOT FREE",
+        (3, 6): "VERY INTOLERANT",
+        (6, 9): "MODERATELY FREE",
+        (9, 10): "MOSTLY FREE",
+    }
+
+    def get_status(val: float):
+        res = None
+        for k, v in status.items():
+            if val in range(*k):
+                res = v
+        return res if res else "COMPLETELY FREE"
+
+    ti_freedom_right = ti_freedom_right.with_columns(
+        status=ti_freedom_right["no_interference_of_religious_dogmas"].map_elements(
+            lambda val: get_status(val)
+        )
+    )
+    return ti_freedom_right

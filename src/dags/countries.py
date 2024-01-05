@@ -17,9 +17,9 @@ def countries_per_region() -> pl.DataFrame:
     )
 
 
-def country_by_id(id: int) -> str:
+def country_by_id(country_id: int) -> str:
     country = pl.read_database(
-        f"SELECT name FROM iso_codes WHERE id = {id}", connection=DB
+        f"SELECT name FROM iso_codes WHERE id = {country_id}", connection=DB
     ).item()
     return country
 
@@ -46,3 +46,10 @@ def country_group() -> list:
             )
             i += 1
     return country_group
+
+
+def region_by_country(country_id: int) -> str:
+    countries = pl.read_database(
+        """SELECT id, region from iso_codes""", connection=DB
+    )
+    return countries.filter(pl.col("id") == country_id).item()
