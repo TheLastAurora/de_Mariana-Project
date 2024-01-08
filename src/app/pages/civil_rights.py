@@ -53,12 +53,17 @@ layout = dbc.Container(
                     ],
                 ),
                 html.Div(
-                    dbc.Card(
-                        id="religious-freedom-card", className="info-card text-center"
-                    )
+                    [
+                        dbc.Card(
+                            id="religious-freedom-card",
+                            className="info-card text-center mt-3",
+                            outline=False,
+                        ),
+                    ],
+                    className="min-vw-50",
                 ),
             ],
-            className="d-flex flex-row",
+            style={"display": "flex", "flex-direction": "row", "gap": "3rem"},
         ),
     ],
     id="civil-rights-container",
@@ -189,24 +194,32 @@ def civil_rights_evolution(country_id: int) -> Tuple[go.Figure, str]:
     )
 
     fig.update_layout(
-        title="<b>Civil Rights score</b>".upper(),
+        title="Civil Rights score".upper(),
+        title_font_size=20,
         xaxis=dict(title="Year"),
         yaxis=dict(
             title="Score",
             tickvals=list(range(11)),
         ),
+        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
     )
     percent = (
         country_tendency["civil_rights"][-1] - country_tendency["civil_rights"][0]
     ) / country_tendency["civil_rights"][-1]
     time_span = country_tendency["year"][-1] - country_tendency["year"][0]
-    report = f"""The provided conditions for exercising Civil Rights in this country got overral {'**unchanged**'.upper() if percent == 0 else f'**{(abs(percent) * 100):.1f}% {"worst" if percent < 0 else "better"}**'.upper()} over the last {time_span} years."""
+    report = f"""This country got overral {'**unchanged**'.upper() if percent == 0 else f'**{(abs(percent) * 100):.1f}% {"worst" if percent < 0 else "better"}**'.upper()} score over the last {time_span} years."""
     return fig, report
 
 
 @callback(
     Output("religious-freedom-card", "children"), Input("selected-country", "value")
 )
-def religious_freedom_status(country_id: int) -> dbc.Card():
+def religious_freedom_status(country_id: int,) -> Tuple[html.H4, dbc.CardImg, dbc.CardBody]:
     df = religious_freedom_df
-    print(df)
+    return [
+        html.H4(
+            "FREEDOM OF WORSHIP", style={"font-size": "20", "font-weight": "normal"}
+        ),
+        dbc.CardImg(src="/assets/pray.png", style={"width": "10em"}),
+        dbc.CardBody("test"),
+    ]
