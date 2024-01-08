@@ -3,18 +3,14 @@ from dash import dcc, callback
 import dash_bootstrap_components as dbc
 from dash import html
 from math import floor
-from dash.dependencies import Input, Output, State
+from dash.dependencies import Input, Output
 from components.index_card import create_card
 import polars as pl
 import plotly.graph_objects as go
-import plotly.express as px
 
 # Dags importing
-import taxes
 import civil_rights
 from countries import country_by_id
-
-tax_per_country_df = taxes.tax_per_country()
 
 # Cards
 property_rights_df = civil_rights.property_rights_ranking()
@@ -33,10 +29,23 @@ layout = dbc.Container(
         ),
         html.Div(
             [
-                dbc.Card(id="property-rights-card", className="info-card text-center"),
-                dbc.Card(id="freedom-labour-card", className="info-card text-center"),
                 dbc.Card(
-                    id="freedom-expression-card", className="info-card text-center"
+                    id="property-rights-card",
+                    className="info-card text-center",
+                    outline=True,
+                    color="dark",
+                ),
+                dbc.Card(
+                    id="freedom-labour-card",
+                    className="info-card text-center",
+                    outline=True,
+                    color="dark",
+                ),
+                dbc.Card(
+                    id="freedom-expression-card",
+                    className="info-card text-center",
+                    outline=True,
+                    color="dark",
                 ),
             ],
             className="cards-div",
@@ -51,19 +60,20 @@ layout = dbc.Container(
                             id="civil-rights-evolution-report", className="text-center"
                         ),
                     ],
+                    className="d-flex flex-column vw-75",
                 ),
                 html.Div(
                     [
                         dbc.Card(
                             id="religious-freedom-card",
-                            className="info-card text-center mt-3",
-                            outline=False,
+                            className="d-flex align-items-center info-card text-center mt-4",
+                            outline=True,
+                            color="dark",
                         ),
                     ],
-                    className="min-vw-50",
                 ),
             ],
-            style={"display": "flex", "flex-direction": "row", "gap": "3rem"},
+            style={"display": "grid", "grid-template-columns": "70% 25%", "gap": "3rem"},
         ),
     ],
     id="civil-rights-container",
@@ -214,12 +224,47 @@ def civil_rights_evolution(country_id: int) -> Tuple[go.Figure, str]:
 @callback(
     Output("religious-freedom-card", "children"), Input("selected-country", "value")
 )
-def religious_freedom_status(country_id: int,) -> Tuple[html.H4, dbc.CardImg, dbc.CardBody]:
+def religious_freedom_status(
+    country_id: int,
+) -> Tuple[html.H4, dbc.CardImg, dbc.CardBody]:
+    global PRAY_IMG_COLOR
     df = religious_freedom_df
+    status = df.filter(pl.col("country_id") == country_id)["status"].item()
+    status_colors = {
+        "NOT FREE": [
+            "#F44336",
+            "invert(36%) sepia(44%) saturate(4265%) hue-rotate(342deg) brightness(98%) contrast(95%)",
+        ],
+        "VERY INTOLERANT": [
+            "#FF5722",
+            "invert(43%) sepia(72%) saturate(2899%) hue-rotate(344deg) brightness(105%) contrast(109%)",
+        ],
+        "MODERATELY FREE": [
+            "#FFC107",
+            "invert(76%) sepia(58%) saturate(1807%) hue-rotate(354deg) brightness(103%) contrast(101%)",
+        ],
+        "MOSTLY FREE": [
+            "#FFEB3B",
+            "invert(98%) sepia(61%) saturate(4849%) hue-rotate(322deg) brightness(106%) contrast(115%)",
+        ],
+        "COMPLETELY FREE": [
+            "#8BC34A",
+            "invert(66%) sepia(43%) saturate(538%) hue-rotate(45deg) brightness(97%) contrast(90%)",
+        ],
+    }
+    PRAY_IMG_COLOR = status_colors.get(status)
     return [
         html.H4(
-            "FREEDOM OF WORSHIP", style={"font-size": "20", "font-weight": "normal"}
+            "FREEDOM OF WORSHIP",
+            style={"font-size": "20", "font-weight": "normal"},
+            className="m-3",
         ),
-        dbc.CardImg(src="/assets/pray.png", style={"width": "10em"}),
-        dbc.CardBody("test"),
+        dbc.CardImg(
+            src="/assets/pray.png",
+            style={
+                "width": "10em",
+                "filter": PRAY_IMG_COLOR[1],
+            },
+        ),
+        dbc.CardBody(status, style={"font-weight": "bold", "color": PRAY_IMG_COLOR[0]}),
     ]

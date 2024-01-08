@@ -95,7 +95,7 @@ def render_page(pathname: str) -> Tuple[html.Div | dbc.Container, html.Div]:
     section = pathname.split("/")[1]
     sidebar = create_sidebar(section)
     match pathname:
-        case None:
+        case "/":
             layout = home.layout
         case "/freedom/civil-rights":
             layout = civil_rights.layout
