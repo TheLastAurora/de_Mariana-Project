@@ -1,0 +1,34 @@
+database:
+  connections:
+    world-governance-index:
+      dialect: "postgresql"
+      driver: "psycopg2"
+      host: "localhost"
+      port: 5432
+      schema: "wgi"
+      username: "postgres"
+      password: "admin"
+    doing-bussiness:
+      dialect: "postgresql"
+      driver: "psycopg2"
+      host: "localhost"
+      port: 5432
+      schema: "db"
+      username: "postgres"
+      password: "admin"
+    transformation-index:
+      dialect: "postgresql"
+      driver: "psycopg2"
+      host: "localhost"
+      port: 5432
+      schema: "ti"
+      username: "postgres"
+      password: "admin"
+    economic-freedom:
+      dialect: "postgresql"
+      driver: "psycopg2"
+      host: "localhost"
+      port: 5432
+      schema: "ef"
+      username: "postgres"
+      password: "admin"

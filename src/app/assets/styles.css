@@ -1,0 +1,185 @@
+/* styles.css */
+body {
+    overflow: hidden;
+}
+
+#full-page {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    overflow: hidden;
+}
+
+#page-content {
+    display: flex;
+    margin-top: 0.5rem;
+    overflow: hidden;
+    width: 100%;
+}
+
+#page-content>.container {
+    min-width: 100%;
+    margin: 0;
+}
+
+#sidebar {
+    height: 100vh;
+    margin-right: 1rem;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    padding-top: 1rem;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    transition: width 0.3s ease;
+}
+
+.sidebar {}
+
+.sidebar hr:first-of-type {
+    margin-right: 30%;
+    margin-left: 30%;
+}
+
+
+.sidebar a:hover {
+    background-color: #c5c5c5;
+}
+
+.sidebar h2 {
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.sidebar p {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    width: 13rem;
+    text-align: justify;
+    word-wrap: break-word;
+}
+
+#sidebar-freedom h2 {
+    margin-left: 2rem;
+}
+
+#sidebar-state-governance>h2 {
+    font-size: x-large;
+}
+
+#globe,
+#globe-inverse {
+    position: fixed;
+    margin-top: 1rem;
+    margin-right: 2rem;
+    top: 0;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    z-index: 1;
+    transition: opacity 0.3s;
+}
+
+#globe-inverse {
+    opacity: 0;
+    z-index: 2;
+}
+
+#globe:hover {
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+#globe-inverse:hover {
+    opacity: 1;
+    transition: opacity 0.3s;
+}
+
+#globe-div {
+    display: block;
+    overflow: scroll;
+    overflow-x: hidden;
+    height: 100vh;
+}
+
+.list-group {}
+
+.list-collapse-header {
+    position: fixed;
+    z-index: 1;
+    top: 2rem;
+}
+
+#list-collapse {
+    padding-top: 3rem;
+    padding-right: 1rem;
+}
+
+/* BOOTSTRAP */
+
+.collapsing.collapse-horizontal {
+    transition: width .15s;
+    transition-timing-function: cubic-bezier(0.1, 0.7, 0.7, 0.3);
+}
+
+
+/*----- Freedom Pages ------ */
+
+/* Civil Rights */
+
+#civil-rights-container {}
+
+.info-card {
+    min-width: 32%;
+}
+
+/* Market Competition */
+
+#market-competition {}
+
+/* Tax Burden */
+
+#tax-burden {}
+
+/* ----- State Governance */
+
+#institutional-stability-container {}
+
+
+/* Home */
+
+#home-container {
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#sg-link,
+#freedom-link {
+    display: inline-block;
+    margin: 10px;
+    padding: 10px;
+    color: #fff;
+    text-decoration: none;
+}
+
+#freedom-home {
+    background: linear-gradient(to right, #e3f4fa, #b7eaff);
+}
+
+#sg-home {
+    background: linear-gradient(to right, #ec2536, #ff6565);
+}
+
+.home-half>* {
+    margin: 1rem;
+    text-decoration: none;
+}
+
+.home-half {
+    width: 50;
+    height: 100;
+}
