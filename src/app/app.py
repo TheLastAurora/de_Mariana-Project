@@ -160,4 +160,4 @@ def update_country(clicked, countries):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, dev_tools_hot_reload=True)
+    app.run(debug=False, dev_tools_hot_reload=True)
